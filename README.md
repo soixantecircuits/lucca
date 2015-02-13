@@ -4,6 +4,7 @@
 
 ```bash
 $ npm i
+$ bower install
 ```
 
 ## Usage
