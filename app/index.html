@@ -3,9 +3,23 @@
 <head>
   <title>lucca</title>
   <link rel="stylesheet" href="../bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
-  <h1>lucca</h1>
-  <p>lucca works in collaboration with zhaoxiangjs in order to configure multiple Canon EOS camera</p>
+<body ng-app="lucca">
+  <div class="wrapper" ng-view></div>
+
+  <!-- bower components -->
+  <script src="../superagent/superagent.js"></script>
+  <script src="../angular/angular.js"></script>
+  <script src="../angular-route/angular-route.js"></script>
+  <script src="../angular-touch/angular-touch.js"></script>
+  <script src="../dat.gui/dat.gui.js"></script>
+  <script src="../lodash/lodash.js"></script>
+
+  <!-- hand baked with <3 -->
+  <script src="config/config.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/controllers/home.js"></script>
+  <script src="js/controllers/camera.js"></script>
 </body>
 </html>

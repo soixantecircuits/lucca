@@ -1,0 +1,29 @@
+#cameras > div {
+  display: inline-block;
+  position: relative;
+}
+
+#cameras img {
+  max-width: 200px;
+  margin: 5px;
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
+}
+
+#cameras img:hover {
+  opacity: .8;
+}
+
+#cameras span {
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  font-weight: 700;
+  font-size: 24px;
+  color: #FFF;
+}
+
+#camera {
+  max-width: 720px;
+  /*display: none;*/
+}
