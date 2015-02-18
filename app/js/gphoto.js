@@ -8,7 +8,7 @@ GPhoto = (function() {
     this.displaySettings = __bind(this.displaySettings, this);
     this.enumSettings = __bind(this.enumSettings, this);
     this.loadSettings = __bind(this.loadSettings, this);
-    // this.settings = {};
+    this.updateSettings = __bind(this.updateSettings, this);
   }
 
   GPhoto.prototype.startPreview = function() {
@@ -97,6 +97,10 @@ GPhoto = (function() {
     this.gui.add(foo, 'Start live preview');
     this.loadSettings(this.enumSettings, address);
   };
+
+  GPhoto.prototype.updateSettings = function (settings, address) {
+    this.enumSettings(JSON.parse(settings), this.gui, address);
+  }
 
   return GPhoto;
 

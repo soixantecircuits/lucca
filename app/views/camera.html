@@ -21,7 +21,10 @@
       <canvas id="cvs" ng-show="ghostmode"></canvas>
       <img id="camera" ng-hide="ghostmode"></img>
     </div>
-    <div class="col-md-3" id="gui-ctn"></div>
+    <div class="col-md-3" id="gui-ctn">
+      <button class="btn btn-default" ng-click="saveSettings()">Save currents settings</button>
+      <button class="btn btn-default" ng-click="restoreSettings()">Restore lasts settings</button>
+    </div>
   </div>
 
 </div>

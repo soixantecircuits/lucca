@@ -50,4 +50,18 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http){
 
   $scope.gphoto = new GPhoto();
   $scope.gphoto.displaySettings('http://voldenuit' + $scope.params.id + '.local:1337');
+
+  $scope.saveSettings = function(){
+    console.log('save');
+    $http
+      .get('http://voldenuit' + $scope.params.id + '.local:1337/api/settings')
+      .success(function (data){
+        console.log(data);
+        localStorage.settings = JSON.stringify(data);
+      });
+  }
+
+  $scope.restoreSettings = function(){
+    $scope.gphoto.updateSettings(localStorage.settings);
+  }
 });
