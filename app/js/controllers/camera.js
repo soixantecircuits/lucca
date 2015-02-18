@@ -4,22 +4,23 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http){
   $scope.params = $routeParams;
   $scope.ghostmode = false;
 
+  $scope.prevId = ($scope.params.id - 1 < 0) ? config.raspberrypi.population : $scope.params.id - 1;
+  $scope.prevDigit = ($scope.prevId.toString().length > 1) ? $scope.prevId.toString() : "0" + $scope.prevId;
+
+  $scope.nextId = ($scope.params.id + 1 > config.raspberrypi.population) ? 1 : +$scope.params.id + 1;
+  $scope.nextDigit = ($scope.nextId.toString().length > 1) ? $scope.nextId.toString() : "0" + $scope.nextId;
+
   $scope.cvs = document.getElementById('cvs');
   $scope.ctx = cvs.getContext('2d');
-  $scope.cvs.width = 640;
-  $scope.cvs.height = 480;
+  $scope.cvs.width = 716;
+  $scope.cvs.height = 477;
 
-  // $scope.img = new Image();
-  // $scope.img.id = 'camera';
-  // document.body.appendChild($scope.img);
   $scope.img = document.getElementById('camera');
   $scope.img.src = 'http://voldenuit' + $scope.params.id + '.local:8080/?action=stream';
 
   $scope.imgPrev = new Image();
   $scope.imgPrev.id = 'prevCamera';
-  var prevId = +$scope.params.id - 1;
-  var prevDigit = (prevId.toString().length > 1) ? prevId.toString() : "0" + prevId;
-  $scope.imgPrev.src = 'http://voldenuit' + prevDigit + '.local:8080/?action=stream';
+  $scope.imgPrev.src = 'http://voldenuit' + $scope.prevDigit + '.local:8080/?action=stream';
   $scope.imgPrev.style.display = 'none';
   document.body.appendChild($scope.imgPrev);
 
@@ -46,12 +47,4 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http){
   });
 
   loop();
-
-  // $scope.triggerGhostmode = function(){
-  //   $scope.ghostmode = !$scope.ghostmode;
-  //   setTimeout(function(){
-  //     $scope.$apply();
-  //   }, 1);
-  // }
-
 });

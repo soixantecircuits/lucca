@@ -1,3 +1,28 @@
+header {
+  background-color: #eee;
+  border-bottom: 1px solid #bbb;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+header h1 {
+  display: inline-block;
+}
+
+header h1 a,
+header h1 a:hover {
+  color: #333;
+}
+
+header .img-ctn {
+  display: inline-block;
+}
+
+header .img-ctn img {
+  padding-top: 5px;
+  width: 90%;
+}
+
 #cameras > div {
   display: inline-block;
   position: relative;
@@ -23,7 +48,14 @@
   color: #FFF;
 }
 
+.camera-nav  {
+}
+
 #camera {
   max-width: 720px;
-  /*display: none;*/
+  border: 2px solid #333;
+}
+
+#cvs {
+  border: 2px solid #333;
 }

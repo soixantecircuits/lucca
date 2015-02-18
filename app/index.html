@@ -6,10 +6,15 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body ng-app="lucca">
+  <header id="header" class="">
+    <h1><a href="#/">Lucca</a></h1>
+    <div class="img-ctn pull-right">
+      <img src="img/sc.png" class="text-right"></img>
+    </div>
+  </header><!-- /header -->
   <div class="wrapper" ng-view></div>
 
   <!-- bower components -->
-  <script src="../superagent/superagent.js"></script>
   <script src="../angular/angular.js"></script>
   <script src="../angular-route/angular-route.js"></script>
   <script src="../angular-touch/angular-touch.js"></script>

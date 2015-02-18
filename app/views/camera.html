@@ -1,12 +1,23 @@
 <div class="container">
-  <div class="row">
-    <h1>Camera #{{params.id}}</h1>
-    <label for="ghost">ghost mode: </label>
-    <input type="checkbox" name="ghost" ng-model="ghostmode">
-    <!-- <input type="checkbox" name="ghost" ng-click="triggerGhostmode()"> -->
+  <div class="row camera-nav">
+    <div class="ghost-mode col-sm-4 col-md-4 col-lg-4">
+      <div>
+        <a href="#/cam/{{prevDigit}}" class="btn btn-default" role="button">&larr;</a>
+      </div>
+      <label for="ghost">ghost mode: </label>
+      <input type="checkbox" name="ghost" ng-model="ghostmode">
+    </div>
+    <div class="cam-title col-sm-4 col-md-4 col-lg-4">
+      <h1>Camera #{{params.id}}</h1>
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <div class="text-right">
+        <a href="#/cam/{{nextDigit}}" class="btn btn-default" role="button">&rarr;</a>
+      </div>
+    </div>
   </div>
   <div class="row">
-    <div class="col-9">
+    <div class="col-md-9">
       <canvas id="cvs" ng-show="ghostmode"></canvas>
       <img id="camera" src="{{imgSrc}}" ng-hide="ghostmode"></img>
     </div>
