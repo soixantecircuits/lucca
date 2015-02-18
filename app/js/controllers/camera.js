@@ -47,4 +47,7 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http){
   });
 
   loop();
+
+  $scope.gphoto = new GPhoto();
+  $scope.gphoto.displaySettings('http://voldenuit' + $scope.params.id + '.local:1337');
 });
