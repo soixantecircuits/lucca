@@ -26,11 +26,40 @@ header .img-ctn img {
 #cameras > div {
   display: inline-block;
   position: relative;
+  width: 200px;
+  height: 133px;
+  background: #DDD;
+  margin: 5px;
+}
+
+#cameras > div:after {
+  position: absolute;
+  top: 50px;
+  left: 90px;
+  font-size: 28px;
+}
+
+#cameras > div.is-not-connected:after {
+  content: ':(';
+  color: #C23;
+}
+
+#cameras > div.is-connected:after {
+  content: ':)';
+  color: #3D6;
+}
+
+#cameras > div.has-preview:after {
+  content: '+';
+  color: #0F0F0F;
+  text-shadow: #eee 1px 1px 1px;
+  opacity: .8;
 }
 
 #cameras img {
-  max-width: 200px;
-  margin: 5px;
+  display: inline-block;
+  width: 200px;
+  height: 133px;
   -webkit-transition: opacity .3s;
   transition: opacity .3s;
 }
@@ -46,9 +75,6 @@ header .img-ctn img {
   font-weight: 700;
   font-size: 24px;
   color: #FFF;
-}
-
-.camera-nav  {
 }
 
 #camera {
@@ -67,24 +93,12 @@ header .img-ctn img {
 }
 
 .cam-target:after {
-  content: '⊗';
+  content: '+';
   font-size: 24px;
   position: absolute;
+  text-shadow: #eee 1px 1px 1px;
   top: 220px;
   left: 354px;
-}
-
-.camera-list {
-  position: relative;
-}
-
-.active.camera-list:after {
-  content: '⊗';
-  color: #0F0F0F;
-  font-size: 24px;
-  position: absolute;
-  top: -8px;
-  left: 98px;
 }
 
 .dg .c {

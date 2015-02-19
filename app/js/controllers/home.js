@@ -24,7 +24,7 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, $http, $q){
       link.className = 'camera-list'
       span.textContent = '#' + digit;
       img.id = 'camera-' + i;
-      img.src = 'img/lucca.png';
+      // img.src = 'img/lucca.png';
 
       document.getElementById('cameras').appendChild(ctn)
       ctn.appendChild(link);
@@ -56,17 +56,16 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, $http, $q){
             url: config.url.match(/(?:http:\/\/[A-Za-z0-9-]+\.)+[A-Za-z0-9]{1,5}:\d{1,5}/)[0],
             id: index
           });
-          document.getElementById('camera-' + index).parentElement.className += ' active';
+          document.getElementById('camera-' + index).parentElement.parentElement.classList.add('is-connected');
         })
         .error(function (err){
-          document.getElementById('camera-' + index).src = 'img/error.png';
+          document.getElementById('camera-' + index).parentElement.parentElement.classList.add('is-not-connected');
         });
   }
 
   $scope.getPreview = function(){
     $scope.requesting = true;
     $scope.killPromises();
-    console.log($rootScope.availableCameras);
     // make sure you don't kill a promise you just instantiate
     setTimeout(function(){
       for (var i = 0; i < $rootScope.availableCameras.length; i++) {
@@ -83,13 +82,15 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, $http, $q){
         .success(function (res, status, headers, config){
           console.log(res);
           if(res.match(/(api\/lastpicture)/)) {
-            document.getElementById('camera-' + $rootScope.availableCameras[index].id).src = $rootScope.availableCameras[index].url + res
+            var domElement = document.getElementById('camera-' + $rootScope.availableCameras[index].id);
+            domElement.parentElement.parentElement.classList.add('has-preview');
+            domElement.src = $rootScope.availableCameras[index].url + res
           } else {
             console.log(res);
           }
         })
         .error(function (err){
-          document.getElementById('camera-' + index).src = 'img/error.png';
+          document.getElementById('camera-' + index).parentElement.parentElement.classList.add('is-not-connected');
         });
   }
 
