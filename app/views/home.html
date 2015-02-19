@@ -1,7 +1,9 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <button class="btn btn-primary" id="getCamTrigger">Get cameras</button>
+      <button class="btn btn-primary" ng-click="getStatus()">Get status</button>
+      <button class="btn btn-primary" ng-click="getPreview()">Get preview</button>
+      <span>{{requesting}}</span>
     </div>
   </div>
   <div class="row">

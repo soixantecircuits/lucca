@@ -67,7 +67,7 @@ header .img-ctn img {
 }
 
 .cam-target:after {
-  content: '+';
+  content: '⊗';
   font-size: 24px;
   position: absolute;
   top: 220px;
@@ -79,7 +79,7 @@ header .img-ctn img {
 }
 
 .active.camera-list:after {
-  content: '+';
+  content: '⊗';
   color: #0F0F0F;
   font-size: 24px;
   position: absolute;
