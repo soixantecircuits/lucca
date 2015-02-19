@@ -28,6 +28,7 @@ app.controller('HomeCtrl', function ($scope, $location, $http, $q){
       var img = document.createElement('img');
 
       link.href = '#/cam/' + digit;
+      link.className = 'camera-list'
       span.textContent = '#' + digit;
       img.id = 'camera-' + i;
       img.src = 'img/lucca.png';
@@ -46,6 +47,7 @@ app.controller('HomeCtrl', function ($scope, $location, $http, $q){
         .success(function (res){
           console.log(res);
           if(res.match(/(api\/lastpicture)/)) {
+            document.getElementById('camera-' + index).parentElement.className += ' active';
             document.getElementById('camera-' + index).src = APIs[index].url + res
           } else {
             console.log(res);
