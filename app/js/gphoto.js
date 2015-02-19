@@ -11,8 +11,8 @@ GPhoto = (function() {
     this.updateSettings = __bind(this.updateSettings, this);
   }
 
-  GPhoto.prototype.startPreview = function() {
-    $('#camera').attr('src', 'http://' + window.location.hostname + ':8080' + '/?action=stream');
+  GPhoto.prototype.startPreview = function(address) {
+    $('#camera').attr('src', address.substring(address.length - 5, 0) + ':8080' + '/?action=stream');
   };
 
   GPhoto.prototype.stopPreview = function() {
@@ -79,7 +79,7 @@ GPhoto = (function() {
     foo = {
       'Start live preview': (function(_this) {
         return function() {
-          return _this.startPreview();
+          return _this.startPreview(address);
         };
       })(this),
       'Take picture': (function(_this) {

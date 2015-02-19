@@ -51,17 +51,46 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http){
   $scope.gphoto = new GPhoto();
   $scope.gphoto.displaySettings('http://voldenuit' + $scope.params.id + '.local:1337');
 
-  $scope.saveSettings = function(){
-    console.log('save');
-    $http
-      .get('http://voldenuit' + $scope.params.id + '.local:1337/api/settings')
-      .success(function (data){
-        console.log(data);
-        localStorage.settings = JSON.stringify(data);
-      });
+  $scope.sendSettingsToAll = function(){
+    if(confirm('This will apply these settings to all cameras, thus potentially freeze them all.\nAre you sure of what you are doing ?')){
+      if(confirm('If you mess up, we will find you.\nDo you still want to continue ?')){
+        var settings = null;
+        $http
+          .get('http://voldenuit' + $scope.params.id + '.local:1337/api/settings')
+          .success(function (data){
+            settings = data;
+
+            var rpi = config.raspberrypi;
+            for (var i = 1; i <= rpi.population; i++) {
+              var digit = (i.toString().length > 1) ? i.toString() : "0" + i;
+              var url = 'http://' + rpi.basename + digit + '.local:' + rpi.port;
+              $http.put(url + '/api/settings', {settings: JSON.stringify(settings)})
+                .success(function (res){
+                  console.log(res);
+                })
+                .error(function (err){
+                  console.log(err);
+                })
+            }
+          })
+          .error(function (err){
+            console.log(err);
+          })
+      }
+    }
   }
 
-  $scope.restoreSettings = function(){
-    $scope.gphoto.updateSettings(localStorage.settings);
-  }
+  // $scope.saveSettings = function(){
+  //   console.log('save');
+  //   $http
+  //     .get('http://voldenuit' + $scope.params.id + '.local:1337/api/settings')
+  //     .success(function (data){
+  //       console.log(data);
+  //       localStorage.settings = JSON.stringify(data);
+  //     });
+  // }
+
+  // $scope.restoreSettings = function(){
+  //   $scope.gphoto.updateSettings(localStorage.settings);
+  // }
 });

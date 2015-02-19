@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('HomeCtrl', function ($scope, $location, $http, $rootScope, $q){
+app.controller('HomeCtrl', function ($scope, $location, $http, $q){
   var APIs = [];
 
   function init(){

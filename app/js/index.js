@@ -10,7 +10,7 @@
 var app = angular
   .module('lucca', [
     'ngRoute',
-    'ngTouch',
+    'ngTouch'
   ]);
 
 app.config(function ($routeProvider) {
