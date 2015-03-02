@@ -4,10 +4,10 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http){
   $scope.params = $routeParams;
   $scope.ghostmode = false;
 
-  $scope.prevId = ($scope.params.id - 1 < 0) ? config.raspberrypi.population : $scope.params.id - 1;
+  $scope.prevId = (+$scope.params.id - 1 < 0) ? config.raspberrypi.population : +$scope.params.id - 1;
   $scope.prevDigit = ($scope.prevId.toString().length > 1) ? $scope.prevId.toString() : "0" + $scope.prevId;
 
-  $scope.nextId = ($scope.params.id + 1 > config.raspberrypi.population) ? 1 : +$scope.params.id + 1;
+  $scope.nextId = (+$scope.params.id + 1 > config.raspberrypi.population) ? 1 : +$scope.params.id + 1;
   $scope.nextDigit = ($scope.nextId.toString().length > 1) ? $scope.nextId.toString() : "0" + $scope.nextId;
 
   $scope.cvs = document.getElementById('cvs');
