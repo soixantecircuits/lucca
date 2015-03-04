@@ -1,21 +1,43 @@
 'use strict';
 
-app.controller('CamCtrl', function ($scope, $location, $routeParams, $http, ZhaoxiangService, $templateCache){
+app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams, $http, ZhaoxiangService, $templateCache, hotkeys){
   $templateCache.removeAll();
   $scope.params = $routeParams;
   $scope.ghostmode = false;
   $scope.isStreaming = false;
   $scope.camera = ZhaoxiangService.getCameraObject($scope.params.id);
   $scope.prev;
-  ZhaoxiangService.getPreviousActiveCamera($scope.camera.index, function (prev){
+  ZhaoxiangService.getPreviousActiveCamera($scope.camera.index, function (prev, async){
     $scope.prev = prev;
-    $scope.$apply();
+    if(async){
+      $scope.$apply();
+    }
   });
   $scope.next;
-  ZhaoxiangService.getNextActiveCamera($scope.camera.index, function (next){
+  ZhaoxiangService.getNextActiveCamera($scope.camera.index, function (next, async){
     $scope.next = next;
-    $scope.$apply();
+    if(async){
+      $scope.$apply();
+    }
   });
+
+  hotkeys.bindTo($scope)
+    .add({
+      combo: 'left',
+      callback: function(){
+        if(!$rootScope.isLoading){
+          window.location = '#/cam/' + $scope.prev.digit;
+        }
+      }
+    })
+    .add({
+      combo: 'right',
+      callback: function(){
+        if(!$rootScope.isLoading){
+          window.location = '#/cam/' + $scope.next.digit;
+        }
+      }
+    });
 
   $scope.cvs = document.getElementById('cvs');
   $scope.ctx = cvs.getContext('2d');
@@ -32,6 +54,13 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http, Zhao
   // $scope.imgPrev.src = 'http://voldenuit' + $scope.prevDigit + '.local:8080/?action=stream';
   // $scope.imgPrev.style.display = 'none';
   // document.body.appendChild($scope.imgPrev);
+
+  // $http.get('http://voldenuit' + $scope.params.id + '.local:1337/api/stream/start');
+  // $scope.imgSrc = 'http://voldenuit' + $scope.params.id + '.local:8080/?action=stream';
+
+  // $scope.$on('$destroy', function(){
+  //   $http.get('http://voldenuit' + $scope.params.id + '.local:1337/api/stream/stop');
+  // });
 
   $scope.toggleStreaming = function(){
     if($scope.isStreaming){
@@ -57,13 +86,6 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http, Zhao
     }
     $scope.ctx.drawImage($scope.img, 0, 0, $scope.cvs.width, $scope.cvs.height);
   }
-
-  // $http.get('http://voldenuit' + $scope.params.id + '.local:1337/api/stream/start');
-  // $scope.imgSrc = 'http://voldenuit' + $scope.params.id + '.local:8080/?action=stream';
-
-  $scope.$on('$destroy', function(){
-    $http.get('http://voldenuit' + $scope.params.id + '.local:1337/api/stream/stop');
-  });
 
   $scope.gphoto = new GPhoto();
   $scope.gphoto.displaySettings('http://voldenuit' + $scope.params.id + '.local:1337');

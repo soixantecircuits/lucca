@@ -10,20 +10,22 @@
 var app = angular
   .module('lucca', [
     'ngRoute',
-    'ngTouch'
+    'ngTouch',
+    'cfp.hotkeys'
   ]);
 
-app.config(function ($routeProvider) {
-  $routeProvider
-  .when('/', {
-    templateUrl: 'views/home.html',
-    controller: 'HomeCtrl'
+app
+  .config(function ($routeProvider) {
+    $routeProvider
+    .when('/', {
+      templateUrl: 'views/home.html',
+      controller: 'HomeCtrl'
+    })
+    .when('/cam/:id', {
+      templateUrl: 'views/camera.html',
+      controller: 'CamCtrl'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
   })
-  .when('/cam/:id', {
-    templateUrl: 'views/camera.html',
-    controller: 'CamCtrl'
-  })
-  .otherwise({
-    redirectTo: '/'
-  });
-});

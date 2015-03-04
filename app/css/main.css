@@ -104,3 +104,31 @@ header .img-ctn img {
 .dg .c {
   color: #333;
 }
+
+.btn {
+  transition: background-color .3s, border-color .3s, color .3s;
+}
+
+.btn.is-disable {
+  background-color: #EEE;
+  border-color: #FFF;
+  color: #CCC;
+  cursor: wait;
+}
+
+.loader {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.loader {
+  text-transform: uppercase;
+  animation: blink 1s ease infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.1; }
+    100% { opacity: 1.0; }
+}

@@ -12,6 +12,9 @@
       <img src="img/sc.png" class="text-right"></img>
     </div>
   </header><!-- /header -->
+  <div class="loader" ng-show="isLoading">
+    <span>loading</span>
+  </div>
   <div class="wrapper" ng-view></div>
 
   <!-- bower components -->
@@ -22,6 +25,7 @@
   <script src="../lodash/lodash.js"></script>
   <script src="../superagent/superagent.js"></script>
   <script src="../jquery/dist/jquery.js"></script>
+  <script src="../angular-hotkeys/build/hotkeys.min.js"></script>
 
   <!-- hand baked with <3 -->
   <script src="config/config.js"></script>

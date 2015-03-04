@@ -2,7 +2,7 @@
   <div class="row camera-nav">
     <div class="ghost-mode col-sm-4 col-md-4 col-lg-4">
       <div>
-        <a ng-href="#/cam/{{prev.digit}}" class="btn btn-default" role="button">&larr;</a>
+        <a ng-href="#/cam/{{prev.digit}}" class="btn btn-default" ng-class="{'is-disable': isLoading}" role="button">&larr;</a>
       </div>
       <label for="ghost">ghost mode: </label>
       <input type="checkbox" name="ghost" ng-model="ghostmode">
@@ -14,7 +14,7 @@
     </div>
     <div class="col-sm-4 col-md-4 col-lg-4">
       <div class="text-right">
-        <a ng-href="#/cam/{{next.digit}}" class="btn btn-default" role="button">&rarr;</a>
+        <a ng-href="#/cam/{{next.digit}}" class="btn btn-default" ng-class="{'is-disable': isLoading}" role="button">&rarr;</a>
       </div>
     </div>
   </div>
