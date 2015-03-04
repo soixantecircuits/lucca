@@ -1,6 +1,7 @@
 'use strict';
 
-app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangService){
+app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangService, $templateCache){
+  $templateCache.removeAll();
   var APIs = [];
   $scope.requesting = false;
   $rootScope.availableCameras = [];

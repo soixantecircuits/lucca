@@ -104,7 +104,6 @@ angular
         var next;
         for (var i = id, len = connectedCameras.length; i <= len; i++) {
           next = _.find(connectedCameras, _.matchesProperty('url', cameras[i].url));
-          console.log(i, cameras[i].url, next);
           if(next !== undefined){
             callback(next);
             break;

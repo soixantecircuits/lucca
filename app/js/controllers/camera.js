@@ -1,6 +1,7 @@
 'use strict';
 
-app.controller('CamCtrl', function ($scope, $location, $routeParams, $http, ZhaoxiangService){
+app.controller('CamCtrl', function ($scope, $location, $routeParams, $http, ZhaoxiangService, $templateCache){
+  $templateCache.removeAll();
   $scope.params = $routeParams;
   $scope.ghostmode = false;
   $scope.isStreaming = false;
@@ -13,7 +14,6 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http, Zhao
   $scope.next;
   ZhaoxiangService.getNextActiveCamera($scope.camera.index, function (next){
     $scope.next = next;
-    console.log(next);
     $scope.$apply();
   });
 
@@ -23,7 +23,7 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http, Zhao
   $scope.cvs.height = 477;
 
   $scope.img = document.getElementById('camera');
-  // $scope.img.src = camera.url + '/api/lastpicture/jpeg';
+  $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
   // $scope.img.src = camera.stream;
 
   // var prevCamera = ZhaoxiangService.getPreviousCamera($scope.params.id);
@@ -32,6 +32,14 @@ app.controller('CamCtrl', function ($scope, $location, $routeParams, $http, Zhao
   // $scope.imgPrev.src = 'http://voldenuit' + $scope.prevDigit + '.local:8080/?action=stream';
   // $scope.imgPrev.style.display = 'none';
   // document.body.appendChild($scope.imgPrev);
+
+  $scope.toggleStreaming = function(){
+    if($scope.isStreaming){
+      $scope.img.src = $scope.camera.stream;
+    } else {
+      $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
+    }
+  }
 
   $scope.loop = function(){
     if($scope.isStreaming){
