@@ -76,7 +76,9 @@ angular
               console.log(data);
             }
           })
-          .error(function (data, status, headers, config){})
+          .error(function (data, status, headers, config){
+            $rootScope.isLoading = false;
+          })
       };
     },
     getCameraAddress: function (index){
@@ -126,7 +128,7 @@ angular
         $rootScope.isLoading = false;
         callback(next, false);
       } else {
-        var time = (connectedCameras.length) ? 5000 : 1500;
+        var time = (connectedCameras.length) ? 10 : 1500;
         $timeout(function(){
           for (var i = id, len = connectedCameras.length; i <= len; i++) {
             next = _.find(connectedCameras, _.matchesProperty('url', cameras[id].url));
@@ -143,10 +145,22 @@ angular
         }, time);
       }
     },
-    getPreviousStream: function(index){
-      // var prevId = (_i - 1 < 0) ? config.raspberrypi.population : _i - 1;
-      // var prevDigit = (prevId.toString().length > 1) ? $scope.prevId.toString() : "0" + prevId;
+    startStream: function(id){
+      $rootScope.isLoading = true;
+      $http
+        .get('http://voldenuit' + id + '.local:1337/api/stream/start')
+        .then(function (){
+          $rootScope.isLoading = false;
+        })
     },
+    stopStream: function(id){
+      $rootScope.isLoading = true;
+      $http
+        .get('http://voldenuit' + id + '.local:1337/api/stream/stop')
+        .then(function (){
+          $rootScope.isLoading = false;
+        })
+    }
   };
 
 })

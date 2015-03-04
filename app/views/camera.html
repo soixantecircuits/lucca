@@ -5,7 +5,7 @@
         <a ng-href="#/cam/{{prev.digit}}" class="btn btn-default" ng-class="{'is-disable': isLoading}" role="button">&larr;</a>
       </div>
       <label for="ghost">ghost mode: </label>
-      <input type="checkbox" name="ghost" ng-model="ghostmode">
+      <input type="checkbox" name="ghost" ng-model="ghostmode" ng-click="toggleGhostmode()">
       <label for="stream">stream: </label>
       <input type="checkbox" name="stream" ng-model="isStreaming" ng-click="toggleStreaming()">
     </div>

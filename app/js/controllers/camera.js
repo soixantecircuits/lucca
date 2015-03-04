@@ -46,31 +46,43 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
 
   $scope.img = document.getElementById('camera');
   $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
-  // $scope.img.src = camera.stream;
 
-  // var prevCamera = ZhaoxiangService.getPreviousCamera($scope.params.id);
-  // $scope.imgPrev = new Image();
-  // $scope.imgPrev.id = 'prevCamera';
-  // $scope.imgPrev.src = 'http://voldenuit' + $scope.prevDigit + '.local:8080/?action=stream';
-  // $scope.imgPrev.style.display = 'none';
-  // document.body.appendChild($scope.imgPrev);
-
-  // $http.get('http://voldenuit' + $scope.params.id + '.local:1337/api/stream/start');
-  // $scope.imgSrc = 'http://voldenuit' + $scope.params.id + '.local:8080/?action=stream';
-
-  // $scope.$on('$destroy', function(){
-  //   $http.get('http://voldenuit' + $scope.params.id + '.local:1337/api/stream/stop');
-  // });
+  $scope.$on('$destroy', function(){
+    ZhaoxiangService.stopStream($scope.camera.digit);
+    if($scope.ghostmode){
+      ZhaoxiangService.stopStream($scope.prev.digit);
+    }
+  });
 
   $scope.toggleStreaming = function(){
     if($scope.isStreaming){
+      ZhaoxiangService.startStream($scope.camera.digit);
       $scope.img.src = $scope.camera.stream;
     } else {
+      ZhaoxiangService.stopStream($scope.camera.digit);
       $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
     }
   }
 
-  $scope.loop = function(){
+  $scope.toggleGhostmode = function(){
+    if(!$scope.isStreaming){
+      $scope.isStreaming = true;
+      $scope.toggleStreaming();
+    }
+    if($scope.ghostmode){
+      ZhaoxiangService.startStream($scope.prev.digit);
+      $scope.imgPrev = new Image();
+      $scope.imgPrev.src = $scope.prev.stream;
+      $scope.imgPrev.style.display = 'none';
+      document.body.appendChild($scope.imgPrev);
+      loop();
+    } else {
+      ZhaoxiangService.stopStream($scope.prev.digit);
+      document.body.removeChild($scope.imgPrev);
+    }
+  }
+
+  function loop(){
     if($scope.isStreaming){
       requestAnimationFrame(loop);
       render();
@@ -83,8 +95,8 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
       $scope.ctx.globalAlpha = 1;
       $scope.ctx.drawImage($scope.imgPrev, 0, 0, $scope.cvs.width, $scope.cvs.height);
       $scope.ctx.globalAlpha = 0.75;
+      $scope.ctx.drawImage($scope.img, 0, 0, $scope.cvs.width, $scope.cvs.height);
     }
-    $scope.ctx.drawImage($scope.img, 0, 0, $scope.cvs.width, $scope.cvs.height);
   }
 
   $scope.gphoto = new GPhoto();
