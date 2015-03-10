@@ -24,17 +24,16 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangSer
     });
   }
 
-  $scope.getStatus = function(){
-    if(!$rootScope.isLoading){
-      var cameras = ZhaoxiangService.getAllStatus();
-      console.log(cameras);
-      for (var i = 0; i < cameras.connected.length; i++) {
-        document.getElementById('camera-' + cameras.connected[i].digit).parentElement.parentElement.classList.add('is-connected');
-      };
-      for (var i = 0; i < cameras.notConnected.length; i++) {
-        document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.parentElement.classList.add('is-not-connected');
-      };
+  function visuallyClassifiedElements(){
+    var cameras = ZhaoxiangService.getAllStatus();
+    for (var i = 0; i < cameras.connected.length; i++) {
+      document.getElementById('camera-' + cameras.connected[i].digit).parentElement.parentElement.classList.add('is-connected');
     }
+    for (var i = 0; i < cameras.notConnected.length; i++) {
+      document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.parentElement.classList.add('is-not-connected');
+      document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.href = '#/';
+    }
+    console.log(cameras);
   }
 
   $scope.getPreview = function(){
@@ -42,10 +41,19 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangSer
       ZhaoxiangService.getAllPreviews(function (res, id){
         var domElement = document.getElementById('camera-' + id);
         domElement.parentElement.parentElement.classList.add('has-preview');
-        domElement.src = ZhaoxiangService.getCameraAddress(id) + res
+        domElement.src = ZhaoxiangService.getCameraAddress(id) + res + '?q=' + new Date().getTime();
       });
     }
   }
 
-  init();
+  if($rootScope.isLoading){
+    $rootScope.$on('ZhaxiangInitEnded', function(){
+      init();
+      visuallyClassifiedElements();
+    });
+  } else {
+    init();
+    visuallyClassifiedElements();
+  }
+
 });

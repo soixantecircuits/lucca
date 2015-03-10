@@ -44,6 +44,10 @@ header .img-ctn img {
   color: #C23;
 }
 
+#cameras > div.is-not-connected a {
+  cursor: default;
+}
+
 #cameras > div.is-connected:after {
   content: ':)';
   color: #3D6;
@@ -82,6 +86,18 @@ header .img-ctn img {
   border: 2px solid #333;
 }
 
+#camera-img-ctn {
+  position: relative;
+  max-width: 720px;
+  max-height: 482px;
+}
+
+.grid-img {
+  position: absolute;
+  width: 720px;
+  height: 482px
+}
+
 #cvs {
   border: 2px solid #333;
 }
@@ -92,13 +108,30 @@ header .img-ctn img {
   height: 100%;
 }
 
+.cam-target:before {
+  content: '';
+  position: absolute;
+  border: 5px solid #FF2020;
+  width: 70px;
+  height: 70px;
+  z-index: 10;
+  margin: -35px 0 0 -35px;
+  top: 50%;
+  left: 50%;
+}
+
 .cam-target:after {
-  content: '+';
+  content: '⚫';
   font-size: 24px;
   position: absolute;
-  text-shadow: #eee 1px 1px 1px;
-  top: 220px;
-  left: 354px;
+  color: #0F0;
+  top: 50%;
+  left: 50%;
+  margin: -17px 0 0 -10px;
+}
+
+#gui-ctn {
+  margin-bottom: 40px;
 }
 
 .dg .c {

@@ -1,11 +1,16 @@
 <div class="container">
+  <div class="row" ng-show="isDeconnected">
+    <p>
+      Oops, il y a un problème avec l'appareil photo ...
+    </p>
+  </div>
   <div class="row camera-nav">
     <div class="ghost-mode col-sm-4 col-md-4 col-lg-4">
       <div>
         <a ng-href="#/cam/{{prev.digit}}" class="btn btn-default" ng-class="{'is-disable': isLoading}" role="button">&larr;</a>
       </div>
-      <label for="ghost">ghost mode: </label>
-      <input type="checkbox" name="ghost" ng-model="ghostmode" ng-click="toggleGhostmode()">
+      <!-- <label for="ghost">ghost mode: </label>
+      <input type="checkbox" name="ghost" ng-model="ghostmode" ng-click="toggleGhostmode()"> -->
       <p ng-show="stream">
         <label for="stream">stream: </label>
         <input type="checkbox" name="stream" ng-model="isStreaming" ng-click="toggleStreaming()">
@@ -22,14 +27,21 @@
   </div>
   <div class="row">
     <div class="col-md-9">
-      <span class="cam-target"></span>
-      <canvas id="cvs" ng-show="ghostmode"></canvas>
-      <img id="camera" ng-hide="ghostmode"></img>
+      <div id="camera-img-ctn">
+        <span class="cam-target"></span>
+        <img src="./img/grid.png" class="grid-img"/>
+        <canvas id="cvs" ng-show="ghostmode"></canvas>
+        <img id="camera" ng-hide="ghostmode"></img>
+      </div>
     </div>
-    <div class="col-md-3" id="gui-ctn">
-      <button class="btn btn-default" ng-click="sendSettingsToAll()">Apply currents settings to all camera</button>
-<!--       <button class="btn btn-default" ng-click="saveSettings()">Save currents settings</button>
-      <button class="btn btn-default" ng-click="restoreSettings()">Restore lasts settings</button> -->
+    <div class="col-md-3">
+      <p>
+        <button class="btn btn-primary" ng-click="shootPreview()" ng-class="{'is-disable': isLoading}">Prévisualiser</button>
+      </p>
+      <div id="gui-ctn"></div>
+      <p>
+        <button class="btn btn-default" ng-click="sendSettingsToAll()" ng-class="{'is-disable': isLoading}">Appliquer à toutes les cameras</button>
+      </p>
     </div>
   </div>
 

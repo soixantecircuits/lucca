@@ -2,7 +2,7 @@ var config = {
   raspberrypi: {
     basename: "voldenuit",
     port: 1337,
-    population: 4
+    population: 104
   },
   streaming: false
 }

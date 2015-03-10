@@ -20,10 +20,10 @@ GPhoto = (function() {
   };
 
   GPhoto.prototype.loadSettings = function(cb, address) {
-    return request.get(address + '/api/settings', (function(_this) {
+    request.get(address + '/api/settings', (function(_this) {
       return function(settings) {
         if (cb) {
-          return cb(JSON.parse(settings.text), null, address);
+          cb(JSON.parse(settings.text), null, address);
         }
       };
     })(this));
@@ -93,11 +93,11 @@ GPhoto = (function() {
         };
       })(this)
     };
-    this.gui.add(foo, 'Take picture');
+    // this.gui.add(foo, 'Take picture');
     if(config.stream){
       this.gui.add(foo, 'Start live preview');
     }
-    this.loadSettings(this.enumSettings, address);
+    return this.loadSettings(this.enumSettings, address);
   };
 
   GPhoto.prototype.updateSettings = function (settings, address) {

@@ -8,50 +8,56 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   $scope.camera = ZhaoxiangService.getCameraObject($scope.params.id);
   $scope.stream = ZhaoxiangService.stream();
   $scope.prev;
-  ZhaoxiangService.getPreviousActiveCamera($scope.camera.index, function (prev, async){
-    $scope.prev = prev;
-    if(async){
-      $scope.$apply();
-    }
-  });
   $scope.next;
-  ZhaoxiangService.getNextActiveCamera($scope.camera.index, function (next, async){
-    $scope.next = next;
-    if(async){
-      $scope.$apply();
-    }
-  });
+  $scope.isDeconnected = false;
 
-  hotkeys.bindTo($scope)
-    .add({
-      combo: 'left',
-      callback: function(){
-        if(!$rootScope.isLoading){
-          window.location = '#/cam/' + $scope.prev.digit;
+  function init(){
+    $scope.prev = ZhaoxiangService.getActiveCamera($scope.camera.index, '-1');
+    $scope.next = ZhaoxiangService.getActiveCamera($scope.camera.index, '+1');
+
+    hotkeys.bindTo($scope)
+      .add({
+        combo: 'left',
+        callback: function(){
+          if(!$rootScope.isLoading){
+            window.location = '#/cam/' + $scope.prev.digit;
+          }
         }
-      }
-    })
-    .add({
-      combo: 'right',
-      callback: function(){
-        if(!$rootScope.isLoading){
-          window.location = '#/cam/' + $scope.next.digit;
+      })
+      .add({
+        combo: 'right',
+        callback: function(){
+          if(!$rootScope.isLoading){
+            window.location = '#/cam/' + $scope.next.digit;
+          }
         }
-      }
+      });
+  }
+
+  if($scope.isLoading){
+    $rootScope.$on('ZhaxiangInitEnded', function(){
+      init();
     });
+  } else {
+    init();
+  }
 
-  $scope.cvs = document.getElementById('cvs');
-  $scope.ctx = cvs.getContext('2d');
-  $scope.cvs.width = 716;
-  $scope.cvs.height = 477;
+  if($scope.stream){
+    $scope.cvs = document.getElementById('cvs');
+    $scope.ctx = cvs.getContext('2d');
+    $scope.cvs.width = 716;
+    $scope.cvs.height = 477;
+  }
 
   $scope.img = document.getElementById('camera');
   $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
 
   $scope.$on('$destroy', function(){
-    ZhaoxiangService.stopStream($scope.camera.digit);
-    if($scope.ghostmode){
-      ZhaoxiangService.stopStream($scope.prev.digit);
+    if($scope.stream){
+      ZhaoxiangService.stopStream($scope.camera.digit);
+      if($scope.ghostmode){
+        ZhaoxiangService.stopStream($scope.prev.digit);
+      }
     }
   });
 
@@ -64,27 +70,35 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
         ZhaoxiangService.stopStream($scope.camera.digit);
         $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
       }
-    } else {
-      // create a picture ghostmode
     }
   }
 
   $scope.toggleGhostmode = function(){
-    if(!$scope.isStreaming){
-      $scope.isStreaming = true;
-      $scope.toggleStreaming();
-    }
-    if($scope.ghostmode){
-      ZhaoxiangService.startStream($scope.prev.digit);
-      $scope.imgPrev = new Image();
-      $scope.imgPrev.src = $scope.prev.stream;
-      $scope.imgPrev.style.display = 'none';
-      document.body.appendChild($scope.imgPrev);
-      loop();
+    if($scope.stream){
+      if(!$scope.isStreaming){
+        $scope.isStreaming = true;
+        $scope.toggleStreaming();
+      }
+      if($scope.ghostmode){
+        ZhaoxiangService.startStream($scope.prev.digit);
+        $scope.imgPrev = new Image();
+        $scope.imgPrev.src = $scope.prev.stream;
+        $scope.imgPrev.style.display = 'none';
+        document.body.appendChild($scope.imgPrev);
+        loop();
+      } else {
+        ZhaoxiangService.stopStream($scope.prev.digit);
+        document.body.removeChild($scope.imgPrev);
+      }
     } else {
-      ZhaoxiangService.stopStream($scope.prev.digit);
-      document.body.removeChild($scope.imgPrev);
+      // make a picture ghostmode
     }
+  }
+
+  $scope.shootPreview = function(){
+    ZhaoxiangService.getPreview($scope.camera.index, function (picture){
+      $scope.img.src = $scope.camera.url + picture + '?q=' + new Date().getTime();
+    });
   }
 
   function loop(){
@@ -105,7 +119,7 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   }
 
   $scope.gphoto = new GPhoto();
-  $scope.gphoto.displaySettings('http://voldenuit' + $scope.params.id + '.local:1337');
+  var settings = $scope.gphoto.displaySettings('http://voldenuit' + $scope.params.id + '.local:1337');
 
   $scope.sendSettingsToAll = function(){
     if(confirm('This will apply these settings to all cameras, thus potentially freeze them all.\nAre you sure of what you are doing ?')){
