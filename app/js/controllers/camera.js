@@ -6,6 +6,7 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   $scope.ghostmode = false;
   $scope.isStreaming = false;
   $scope.camera = ZhaoxiangService.getCameraObject($scope.params.id);
+  $scope.stream = ZhaoxiangService.stream();
   $scope.prev;
   ZhaoxiangService.getPreviousActiveCamera($scope.camera.index, function (prev, async){
     $scope.prev = prev;
@@ -55,12 +56,16 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   });
 
   $scope.toggleStreaming = function(){
-    if($scope.isStreaming){
-      ZhaoxiangService.startStream($scope.camera.digit);
-      $scope.img.src = $scope.camera.stream;
+    if($scope.stream){
+      if($scope.isStreaming){
+        ZhaoxiangService.startStream($scope.camera.digit);
+        $scope.img.src = $scope.camera.stream;
+      } else {
+        ZhaoxiangService.stopStream($scope.camera.digit);
+        $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
+      }
     } else {
-      ZhaoxiangService.stopStream($scope.camera.digit);
-      $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
+      // create a picture ghostmode
     }
   }
 

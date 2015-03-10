@@ -3,5 +3,5 @@ tmp/
 .DS_Store
 dist/
 resources/**/*
-app/config/config.json
+app/config/config.js
 bower_components/

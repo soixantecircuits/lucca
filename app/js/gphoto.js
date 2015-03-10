@@ -94,7 +94,9 @@ GPhoto = (function() {
       })(this)
     };
     this.gui.add(foo, 'Take picture');
-    this.gui.add(foo, 'Start live preview');
+    if(config.stream){
+      this.gui.add(foo, 'Start live preview');
+    }
     this.loadSettings(this.enumSettings, address);
   };
 

@@ -4,6 +4,7 @@ angular
 .module('lucca')
 .factory('ZhaoxiangService', function ($http, $q, $timeout, $rootScope){
   var rpi = config.raspberrypi;
+  var shouldStream = config.stream;
   var cameras = [];
   var connectedCameras = [];
   var notConnectedCameras = [];
@@ -146,6 +147,9 @@ angular
       }
     },
     startStream: function(id){
+      if(!shouldStream){
+        return 'Streaming not activated';
+      }
       $rootScope.isLoading = true;
       $http
         .get('http://voldenuit' + id + '.local:1337/api/stream/start')
@@ -154,13 +158,18 @@ angular
         })
     },
     stopStream: function(id){
+      if(!shouldStream){
+        return 'Streaming not activated';
+      }
       $rootScope.isLoading = true;
       $http
         .get('http://voldenuit' + id + '.local:1337/api/stream/stop')
         .then(function (){
           $rootScope.isLoading = false;
         })
+    },
+    stream: function(){
+      return shouldStream;
     }
-  };
-
+  }
 })

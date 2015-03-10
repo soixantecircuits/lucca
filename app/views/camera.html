@@ -6,8 +6,10 @@
       </div>
       <label for="ghost">ghost mode: </label>
       <input type="checkbox" name="ghost" ng-model="ghostmode" ng-click="toggleGhostmode()">
-      <label for="stream">stream: </label>
-      <input type="checkbox" name="stream" ng-model="isStreaming" ng-click="toggleStreaming()">
+      <p ng-show="stream">
+        <label for="stream">stream: </label>
+        <input type="checkbox" name="stream" ng-model="isStreaming" ng-click="toggleStreaming()">
+      </p>
     </div>
     <div class="cam-title col-sm-4 col-md-4 col-lg-4">
       <h1>Camera #{{params.id}}</h1>
