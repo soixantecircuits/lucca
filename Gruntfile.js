@@ -231,7 +231,7 @@ module.exports = function (grunt) {
       all: {
         files: ['app/**/*'],
         options: {
-          livereload: true,
+          // livereload: true,
         },
       },
     }
