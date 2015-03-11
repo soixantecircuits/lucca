@@ -14,6 +14,22 @@ header h1 a:hover {
   color: #333;
 }
 
+.horizontal-line{
+    width: 100%;
+  top: 24px;
+  height: 1px;
+  position: absolute;
+  border: 1px solid red;
+}
+.vertical-line{
+  height: 100%;
+  width: 1px;
+  position: absolute;
+  border: 1px solid red;
+  left: 358px;
+  top: 0px;
+}
+
 header .img-ctn {
   display: inline-block;
 }
