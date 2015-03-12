@@ -47,7 +47,7 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangSer
   }
 
   if($rootScope.isLoading){
-    $rootScope.$on('ZhaxiangInitEnded', function(){
+    $rootScope.$on('ZhaoxiangInitEnded', function(){
       init();
       visuallyClassifiedElements();
     });

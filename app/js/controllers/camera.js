@@ -35,7 +35,7 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   }
 
   if($scope.isLoading){
-    $rootScope.$on('ZhaxiangInitEnded', function(){
+    $rootScope.$on('ZhaoxiangInitEnded', function(){
       init();
     });
   } else {
@@ -91,7 +91,7 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
         document.body.removeChild($scope.imgPrev);
       }
     } else {
-      // make a picture ghostmode
+      document.getElementById('ghost').src = $scope.prev.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
     }
   }
 

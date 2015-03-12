@@ -111,11 +111,20 @@ header .img-ctn img {
 .grid-img {
   position: absolute;
   width: 720px;
-  height: 482px
+  height: 482px;
+  z-index: 10;
 }
 
 #cvs {
   border: 2px solid #333;
+}
+
+#ghost {
+  opacity: .5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 720px;
 }
 
 .cam-target {

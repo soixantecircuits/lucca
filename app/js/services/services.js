@@ -36,7 +36,7 @@ angular
           if(connectedCameras.length + notConnectedCameras.length === rpi.population){
             $rootScope.isLoading = false;
             connectedCameras = _.sortBy(connectedCameras, 'index');
-            $rootScope.$emit('ZhaxiangInitEnded');
+            $rootScope.$emit('ZhaoxiangInitEnded');
           }
         })
         .error(function (data, status, headers, config){
@@ -48,7 +48,7 @@ angular
           if(connectedCameras.length + notConnectedCameras.length === rpi.population){
             $rootScope.isLoading = false;
             connectedCameras = _.sortBy(connectedCameras, 'index');
-            $rootScope.$emit('ZhaxiangInitEnded');
+            $rootScope.$emit('ZhaoxiangInitEnded');
           }
         });
 

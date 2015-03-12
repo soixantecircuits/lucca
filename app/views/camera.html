@@ -9,8 +9,8 @@
       <div>
         <a ng-href="#/cam/{{prev.digit}}" class="btn btn-default" ng-class="{'is-disable': isLoading}" role="button">&larr;</a>
       </div>
-      <!-- <label for="ghost">ghost mode: </label>
-      <input type="checkbox" name="ghost" ng-model="ghostmode" ng-click="toggleGhostmode()"> -->
+      <label for="ghost">ghost mode: </label>
+      <input type="checkbox" name="ghost" ng-model="ghostmode" ng-click="toggleGhostmode()">
       <p ng-show="stream">
         <label for="stream">stream: </label>
         <input type="checkbox" name="stream" ng-model="isStreaming" ng-click="toggleStreaming()">
@@ -30,8 +30,9 @@
       <div id="camera-img-ctn">
         <span class="cam-target"></span>
         <img src="./img/grid.png" class="grid-img"/>
-        <canvas id="cvs" ng-show="ghostmode"></canvas>
-        <img id="camera" ng-hide="ghostmode"></img>
+        <canvas id="cvs" ng-show="ghostmode && streaming"></canvas>
+        <img id="ghost" ng-show="ghostmode && !streaming"></img>
+        <img id="camera" ng-hide="ghostmode && streaming"></img>
         <div class="horizontal-line"></div>
         <div class="vertical-line"></div>
       </div>
