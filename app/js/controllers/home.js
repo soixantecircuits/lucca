@@ -3,27 +3,6 @@
 app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangService, $templateCache){
   $templateCache.removeAll();
   var APIs = [];
-  $scope.photo = {number: 'abc',
-    rotation:0,
-    translateX:0,
-    translateY:0
-  };
-  $scope.setRotation = function(){
-    $('.ghosty > .active').css({
-      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
-    });
-  }
-  $scope.setTranslationX = function(){
-    $('.ghosty > .active').css({
-      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
-    });
-  }
-  $scope.setTranslationY = function(){
-    $('.ghosty > .active').css({
-      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
-    });
-  }
-  
 
   $rootScope.availableCameras = [];
 

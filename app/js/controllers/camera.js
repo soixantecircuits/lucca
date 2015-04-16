@@ -135,6 +135,27 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   $scope.gphoto = new GPhoto();
   var settings = $scope.gphoto.displaySettings('http://voldenuit' + $scope.params.id + '.local:1337');
 
+  $scope.photo = {number: 'abc',
+    rotation:0,
+    translateX:0,
+    translateY:0
+  };
+  $scope.setRotation = function(){
+    $('#camera-img-ctn > #camera').css({
+      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
+    });
+  }
+  $scope.setTranslationX = function(){
+    $('#camera-img-ctn > #camera').css({
+      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
+    });
+  }
+  $scope.setTranslationY = function(){
+    $('#camera-img-ctn > #camera').css({
+      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
+    });
+  }
+
   $scope.sendSettingsToAll = function(){
     if(confirm('This will apply these settings to all cameras, thus potentially freeze them all.\nAre you sure of what you are doing ?')){
       if(confirm('If you mess up, we will find you.\nDo you still want to continue ?')){
