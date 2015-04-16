@@ -69,6 +69,11 @@ header .img-ctn img {
   color: #3D6;
 }
 
+#cameras > div.is-placeholder:after {
+  content: ':|';
+  color: #FF530D;
+}
+
 #cameras > div.has-preview:after {
   content: '+';
   color: #0F0F0F;

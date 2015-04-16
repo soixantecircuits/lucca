@@ -26,6 +26,8 @@ angular
         stream: '//' + rpi.basename + digit + '.local:' + streamPort + '/?action=stream'
       });
 
+      var requestAPI = (config.dev) ? '' : '/api/status';
+
       cameras[i].defer = $q.defer();
       cameras[i].request = $http
         .get(cameras[i].url + '/api/status', {timeout: cameras[i].defer.promise})
@@ -41,9 +43,11 @@ angular
         })
         .error(function (data, status, headers, config){
           var camId = config.url.match(/voldenuit(.*)\.local/)[1];
-          notConnectedCameras.push({
-            digit: camId
-          })
+          // notConnectedCameras.push({
+          //   digit: camId
+          // })
+          notConnectedCameras.push(cameras[Number(camId) - 1]);
+          notConnectedCameras = _.sortBy(notConnectedCameras, 'index');
 
           if(connectedCameras.length + notConnectedCameras.length === rpi.population){
             $rootScope.isLoading = false;
@@ -114,11 +118,11 @@ angular
         })
     },
     getPreviousCamera: function(index){
-      var id = (Number(index) - 1 < 0) ? rpi.population - 1 : Number(index) - 1;
+      var id = (Number(index) - 1 < 0) ? rpi.population - 1 : Number(index) - 2;
       return cameras[id];
     },
     getNextCamera: function(index){
-      var id = (Number(index) + 1 > rpi.population - 1) ? 0 : Number(index) + 1;
+      var id = (Number(index) + 1 > rpi.population - 1) ? 0 : Number(index);
       return cameras[id];
     },
     getActiveCamera: function(start, direction){

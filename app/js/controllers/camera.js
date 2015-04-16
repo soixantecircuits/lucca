@@ -12,8 +12,14 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   $scope.isDeconnected = false;
 
   function init(){
-    $scope.prev = ZhaoxiangService.getActiveCamera($scope.camera.index, '-1');
-    $scope.next = ZhaoxiangService.getActiveCamera($scope.camera.index, '+1');
+    if(config.dev){
+      $scope.camera.url = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();
+      $scope.prev = ZhaoxiangService.getPreviousCamera($scope.params.id);
+      $scope.next = ZhaoxiangService.getNextCamera($scope.params.id);
+    } else {
+      $scope.prev = ZhaoxiangService.getActiveCamera($scope.camera.index, '-1');
+      $scope.next = ZhaoxiangService.getActiveCamera($scope.camera.index, '+1');
+    }
 
     hotkeys.bindTo($scope)
       .add({
@@ -50,7 +56,11 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   }
 
   $scope.img = document.getElementById('camera');
-  $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
+  if(config.dev){
+    $scope.img.src = $scope.camera.url;
+  }else{
+    $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
+  }
 
   $scope.$on('$destroy', function(){
     if($scope.stream){
@@ -91,7 +101,11 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
         document.body.removeChild($scope.imgPrev);
       }
     } else {
-      document.getElementById('ghost').src = $scope.prev.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
+      if(config.dev){
+        document.getElementById('ghost').src = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();
+      }else{
+        document.getElementById('ghost').src = $scope.prev.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
+      }
     }
   }
 
