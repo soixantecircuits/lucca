@@ -20,5 +20,7 @@ $ grunt dist-xxxx
 >
 >`grunt dist-linux / dist-linux32 / dist-win / dist-mac / dist-mac32`
 
+You can set the `dev` parameter of the `config` object to `true` if you want to use fake pictures.
+
 ## To Do
 - Get nw from grunt task

@@ -4,5 +4,6 @@ var config: {
     port: 1337,
     population: 64
   },
-  streaming: true
+  streaming: true,
+  dev: false
 }

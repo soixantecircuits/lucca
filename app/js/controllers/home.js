@@ -52,9 +52,15 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangSer
     for (var i = 0; i < cameras.connected.length; i++) {
       document.getElementById('camera-' + cameras.connected[i].digit).parentElement.parentElement.classList.add('is-connected');
     }
-    for (var i = 0; i < cameras.notConnected.length; i++) {
-      document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.parentElement.classList.add('is-not-connected');
-      document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.href = '#/';
+    if(config.dev){
+      for (var i = 0; i < cameras.notConnected.length; i++) {
+        document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.parentElement.classList.add('is-placeholder');
+      }
+    } else {
+      for (var i = 0; i < cameras.notConnected.length; i++) {
+        document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.parentElement.classList.add('is-not-connected');
+        document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.href = '#/';
+      }
     }
     console.log(cameras);
   }
