@@ -13,7 +13,8 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
 
   function init(){
     if(config.dev){
-      $scope.camera.url = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();
+      $scope.camera.url = 'img/data/output_000' + $scope.params.id + '.jpg';
+      // $scope.camera.url = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();
       $scope.prev = ZhaoxiangService.getPreviousCamera($scope.params.id);
       $scope.next = ZhaoxiangService.getNextCamera($scope.params.id);
     } else {
@@ -102,7 +103,9 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
       }
     } else {
       if(config.dev){
-        document.getElementById('ghost').src = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();
+        var prevID = ($scope.params.id - 1 < 10) ? '0' + Number($scope.params.id - 1).toString() : ($scope.params.id - 1);
+        document.getElementById('ghost').src = 'img/data/output_000' + prevID + '.jpg';
+        // document.getElementById('ghost').src = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();
       }else{
         document.getElementById('ghost').src = $scope.prev.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
       }
