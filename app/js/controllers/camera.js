@@ -1,4 +1,5 @@
 'use strict';
+// TODO: Use a config file for hostname
 
 app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams, $http, ZhaoxiangService, $templateCache, hotkeys){
   $templateCache.removeAll();
@@ -133,14 +134,14 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   }
 
   $scope.gphoto = new GPhoto();
-  var settings = $scope.gphoto.displaySettings('http://voldenuit' + $scope.params.id + '.local:1337');
+  var settings = $scope.gphoto.displaySettings('http://chow-chow' + $scope.params.id + '.local:1337');
 
   $scope.sendSettingsToAll = function(){
     if(confirm('This will apply these settings to all cameras, thus potentially freeze them all.\nAre you sure of what you are doing ?')){
       if(confirm('If you mess up, we will find you.\nDo you still want to continue ?')){
         var settings = null;
         $http
-          .get('http://voldenuit' + $scope.params.id + '.local:1337/api/settings')
+          .get('http://chow-chow' + $scope.params.id + '.local:1337/api/settings')
           .success(function (data){
             settings = data;
 

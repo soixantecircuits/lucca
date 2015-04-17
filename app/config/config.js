@@ -1,6 +1,6 @@
 var config = {
   raspberrypi: {
-    basename: "voldenuit",
+    basename: "chow-chow",
     port: 1337,
     population: 10
   },
