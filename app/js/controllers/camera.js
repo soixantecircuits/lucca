@@ -138,7 +138,7 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   $scope.gphoto = new GPhoto();
   var settings = $scope.gphoto.displaySettings('http://voldenuit' + $scope.params.id + '.local:1337');
 
-  $scope.photo = {number: 'abc',
+  $scope.photo = {number: $scope.params.id,
     rotation:0,
     translateX:0,
     translateY:0
@@ -157,6 +157,14 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
     $('#camera-img-ctn > #camera').css({
       'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
     });
+  }
+
+  $scope.sendAlignment = function(){
+    $http
+      .get(config.nuwa.address + ':' + config.nuwa.port + '/api/params/' + $scope.photo.number + '/' + $scope.photo.hello + '/' + $scope.photo.translateX + '/' + $scope.photo.translateY)
+      .then(function (res){
+        console.log(res);
+      })
   }
 
   $scope.sendSettingsToAll = function(){
