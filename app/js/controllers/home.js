@@ -8,6 +8,7 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangSer
     translateX:0,
     translateY:0
   };
+  //convert 0001.jpg -rotate -0 -page +0-0 -background none -flatten -gravity Center -crop 1760x990+0+0 +repage newtest01.jpg
   $scope.setRotation = function(){
     $('.ghosty > .active').css({
       'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
