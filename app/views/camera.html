@@ -27,9 +27,24 @@
   </div>
   <div class="row">
     <div class="col-md-9">
+      <div class="control-ghost">
+        <label for=weight>Rotation: {{photo.rotation}}</label>
+        <input type="range" id="rotation" min="-5" value="0" max="5" step="0.1" ng-change="setRotation()" ng-model="photo.rotation">
+        <label for=weight>translate X: {{photo.translateX}}</label>
+        <input type="range" id="translateX" min="-20" value="0" max="20" step="0.1" ng-change="setTranslationX()" ng-model="photo.translateX">
+        <label for=weight>translate Y: {{photo.translateY}}</label>
+        <input type="range" id="translateY" min="-20" value="0" max="20" step="0.1" ng-change="setTranslationY()" ng-model="photo.translateY">
+      </div>
       <div id="camera-img-ctn">
+
         <span class="cam-target"></span>
         <img src="./img/grid.png" class="grid-img"/>
+
+<!--         <div class="ghosty">
+          <img ng-src="img/data/0001.jpg" alt="">
+          <img class='active' ng-src="img/data/0002.jpg" alt="">
+          <div class="overlay">
+        </div> -->
         <canvas id="cvs" ng-show="ghostmode && streaming"></canvas>
         <img id="ghost" ng-show="ghostmode && !streaming"></img>
         <img id="camera" ng-hide="ghostmode && streaming"></img>
@@ -40,6 +55,7 @@
     <div class="col-md-3">
       <p>
         <button class="btn btn-primary" ng-click="shootPreview()" ng-class="{'is-disable': isLoading}">Prévisualiser</button>
+        <button class="btn btn-primary" ng-click="sendAlignment()" ng-class="{'is-disable': isLoading}">Envoyer les paramètres d'alignement</button>
       </p>
       <div id="gui-ctn"></div>
       <p>

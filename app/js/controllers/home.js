@@ -3,29 +3,6 @@
 app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangService, $templateCache){
   $templateCache.removeAll();
   var APIs = [];
-  $scope.photo = {number: 'abc',
-    rotation:0,
-    translateX:0,
-    translateY:0
-  };
-  //convert 0001.jpg -rotate -0 -page +0-0 -background none -flatten -gravity Center -crop 1760x990+0+0 +repage newtest01.jpg
-  $scope.setRotation = function(){
-    $('.ghosty > .active').css({
-      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
-    });
-  }
-  $scope.setTranslationX = function(){
-    $('.ghosty > .active').css({
-      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
-    });
-  }
-  $scope.setTranslationY = function(){
-    $('.ghosty > .active').css({
-      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
-    });
-  }
-  
-
   $rootScope.availableCameras = [];
 
 
@@ -53,9 +30,15 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangSer
     for (var i = 0; i < cameras.connected.length; i++) {
       document.getElementById('camera-' + cameras.connected[i].digit).parentElement.parentElement.classList.add('is-connected');
     }
-    for (var i = 0; i < cameras.notConnected.length; i++) {
-      document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.parentElement.classList.add('is-not-connected');
-      document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.href = '#/';
+    if(config.dev){
+      for (var i = 0; i < cameras.notConnected.length; i++) {
+        document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.parentElement.classList.add('is-placeholder');
+      }
+    } else {
+      for (var i = 0; i < cameras.notConnected.length; i++) {
+        document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.parentElement.classList.add('is-not-connected');
+        document.getElementById('camera-' + cameras.notConnected[i].digit).parentElement.href = '#/';
+      }
     }
     console.log(cameras);
   }

@@ -8,17 +8,4 @@
   <div class="row">
     <div class="col-12" id="cameras"></div>
   </div>
-  <div class="control-ghost">
-    <label for=weight>Rotation: {{photo.rotation}}</label>
-    <input type="range" id="rotation" min="-5" value="0" max="5" step="0.1" ng-change="setRotation()" ng-model="photo.rotation">
-    <label for=weight>translate X: {{photo.translateX}}</label>
-    <input type="range" id="translateX" min="-20" value="0" max="20" step="0.1" ng-change="setTranslationX()" ng-model="photo.translateX">
-    <label for=weight>translate Y: {{photo.translateY}}</label>
-    <input type="range" id="translateY" min="-20" value="0" max="20" step="0.1" ng-change="setTranslationY()" ng-model="photo.translateY">
-  </div>
-  <div class="ghosty">
-    <img ng-src="img/data/0001.jpg" alt="">
-    <img class='active' ng-src="img/data/0002.jpg" alt="">
-    <div class="overlay"><!--should represent 1760x990 -->
-  </div>
 </div>

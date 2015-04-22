@@ -12,8 +12,15 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   $scope.isDeconnected = false;
 
   function init(){
-    $scope.prev = ZhaoxiangService.getActiveCamera($scope.camera.index, '-1');
-    $scope.next = ZhaoxiangService.getActiveCamera($scope.camera.index, '+1');
+    if(config.dev){
+      $scope.camera.url = 'img/data/output_000' + $scope.params.id + '.jpg';
+      // $scope.camera.url = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();
+      $scope.prev = ZhaoxiangService.getPreviousCamera($scope.params.id);
+      $scope.next = ZhaoxiangService.getNextCamera($scope.params.id);
+    } else {
+      $scope.prev = ZhaoxiangService.getActiveCamera($scope.camera.index, '-1');
+      $scope.next = ZhaoxiangService.getActiveCamera($scope.camera.index, '+1');
+    }
 
     hotkeys.bindTo($scope)
       .add({
@@ -50,7 +57,11 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
   }
 
   $scope.img = document.getElementById('camera');
-  $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
+  if(config.dev){
+    $scope.img.src = $scope.camera.url;
+  }else{
+    $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
+  }
 
   $scope.$on('$destroy', function(){
     if($scope.stream){
@@ -91,7 +102,13 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
         document.body.removeChild($scope.imgPrev);
       }
     } else {
-      document.getElementById('ghost').src = $scope.prev.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
+      if(config.dev){
+        var prevID = ($scope.params.id - 1 < 10) ? '0' + Number($scope.params.id - 1).toString() : ($scope.params.id - 1);
+        document.getElementById('ghost').src = 'img/data/output_000' + prevID + '.jpg';
+        // document.getElementById('ghost').src = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();
+      }else{
+        document.getElementById('ghost').src = $scope.prev.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
+      }
     }
   }
 
@@ -120,6 +137,35 @@ app.controller('CamCtrl', function ($scope, $rootScope, $location, $routeParams,
 
   $scope.gphoto = new GPhoto();
   var settings = $scope.gphoto.displaySettings('http://voldenuit' + $scope.params.id + '.local:1337');
+
+  $scope.photo = {number: $scope.params.id,
+    rotation:0,
+    translateX:0,
+    translateY:0
+  };
+  $scope.setRotation = function(){
+    $('#camera-img-ctn > #camera').css({
+      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
+    });
+  }
+  $scope.setTranslationX = function(){
+    $('#camera-img-ctn > #camera').css({
+      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
+    });
+  }
+  $scope.setTranslationY = function(){
+    $('#camera-img-ctn > #camera').css({
+      'webkitTransform': 'rotate('+this.photo.rotation+'deg) translateX('+this.photo.translateX+'px) translateY('+this.photo.translateY+'px)'
+    });
+  }
+
+  $scope.sendAlignment = function(){
+    $http
+      .get(config.nuwa.address + ':' + config.nuwa.port + '/api/params/' + $scope.photo.number + '/' + $scope.photo.hello + '/' + $scope.photo.translateX + '/' + $scope.photo.translateY)
+      .then(function (res){
+        console.log(res);
+      })
+  }
 
   $scope.sendSettingsToAll = function(){
     if(confirm('This will apply these settings to all cameras, thus potentially freeze them all.\nAre you sure of what you are doing ?')){
