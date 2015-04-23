@@ -125,6 +125,9 @@ angular
       var id = (Number(index) + 1 > rpi.population - 1) ? 0 : Number(index);
       return cameras[id];
     },
+    getListOfActiveCameras : function(){
+      return cameras;
+    },
     getActiveCamera: function(start, direction){
       if (direction === '+1' || direction === '-1'){
         var lastConnectedCam = connectedCameras[connectedCameras.length - 1];

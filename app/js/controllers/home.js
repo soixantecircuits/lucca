@@ -5,6 +5,7 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangSer
   var APIs = [];
   $rootScope.availableCameras = [];
 
+
   function init(){
     ZhaoxiangService.doActionForAll(function (camera){
       var ctn = document.createElement('div');
@@ -51,6 +52,8 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangSer
       });
     }
   }
+
+
 
   if($rootScope.isLoading){
     $rootScope.$on('ZhaoxiangInitEnded', function(){

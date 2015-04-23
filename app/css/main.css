@@ -131,6 +131,7 @@ header .img-ctn img {
   top: 0;
   left: 0;
   max-width: 720px;
+  z-index: 10;
 }
 
 .cam-target {
@@ -199,4 +200,8 @@ img#camera{
     0% { opacity: 1.0; }
     50% { opacity: 0.1; }
     100% { opacity: 1.0; }
+}
+
+.control-ghost {
+  margin-bottom: 60px;
 }

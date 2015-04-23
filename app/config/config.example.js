@@ -5,5 +5,9 @@ var config: {
     population: 64
   },
   streaming: true,
-  dev: false
+  dev: false,
+  nuwa: {
+    address: 'http://127.0.0.1',
+    port: '3000'
+  }
 }
