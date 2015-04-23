@@ -2,8 +2,8 @@ var config = {
   raspberrypi: {
     basename: "chow-chow",
     port: 1337,
-    population: 10
+    population: 64
   },
   streaming: false,
-  dev: true
+  dev: false
 }

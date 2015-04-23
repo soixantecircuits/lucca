@@ -87,6 +87,7 @@ header .img-ctn img {
   height: 133px;
   -webkit-transition: opacity .3s;
   transition: opacity .3s;
+  /*-webkit-transform: rotate(180deg);*/
 }
 
 #cameras img:hover {
@@ -136,6 +137,10 @@ header .img-ctn img {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+img#camera{
+  /*-webkit-transform: rotate(180deg);*/
 }
 
 .cam-target:before {
