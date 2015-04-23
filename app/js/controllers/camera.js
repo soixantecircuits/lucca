@@ -79,6 +79,19 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
   }
 
   function init() {
+    $http
+      .get('/camcalib/')
+      .then(function(res){
+        var dataRes = JSON.parse(res.data);
+        if(dataRes.length > 0){
+          $scope.photoCalibList = dataRes;
+          $scope.currentCalib = $scope.photoCalibList[Number($scope.params.id)];
+          if($scope.currentCalib){
+            $scope.photo = $scope.currentCalib;
+            $scope.applyCalibration();
+          }
+        }
+      });
     if (config.dev) {
       $scope.camera.url = 'img/data/' + config.fakeFile.format + config.fakeFile.zero + $scope.params.id + '.jpg';
       // $scope.camera.url = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();

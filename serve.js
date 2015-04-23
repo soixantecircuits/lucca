@@ -39,12 +39,15 @@ app.use('/camcalib/:calibration', function (req, res, next) {
     }
     res.status(200).end();
     next();  
-  } else if(req.method == 'GET'){
-    res.status(200);
-    res.json(localStorage.setItem('camcalib'));
-  }
-  
+  } 
 });
+
+app.get('/camcalib/', function(req, res){
+    res.status(200);
+    res.json(localStorage.getItem('camcalib'));
+});
+
+
 
 // Create server
 /*var server = http.createServer(function(req, res) {
