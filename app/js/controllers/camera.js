@@ -234,8 +234,9 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
   }
 
   $scope.sendAlignment = function() {
+    var factorScale = $('#camera').get(0).naturalWidth/$('#camera').outerWidth();
     $http
-      .get(config.nuwa.address + ':' + config.nuwa.port + '/api/params/' + $scope.photo.number + '/' + $scope.photo.rotation + '/' + $scope.photo.translateX + '/' + $scope.photo.translateY)
+      .get(config.nuwa.address + ':' + config.nuwa.port + '/api/params/' + $scope.photo.number + '/' + $scope.photo.rotation + '/' + factorScale*$scope.photo.translateX + '/' + factorScale*$scope.photo.translateY)
       .then(function(res) {
         console.log(res);
       })
