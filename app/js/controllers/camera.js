@@ -188,7 +188,8 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
   }
 
   $scope.gphoto = new GPhoto();
-  var settings = $scope.gphoto.displaySettings('http://chow-chow' + $scope.params.id + '.local:1337');
+  var rpi = config.raspberrypi;
+  var settings = $scope.gphoto.displaySettings('http://' + rpi.basename + $scope.params.id + '.local:1337');
 
   $scope.saveCalibration = function() {
     //photo.number is a string... so $scope.params.id is a string.
@@ -246,12 +247,12 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
     if (confirm('This will apply these settings to all cameras, thus potentially freeze them all.\nAre you sure of what you are doing ?')) {
       if (confirm('If you mess up, we will find you.\nDo you still want to continue ?')) {
         var settings = null;
+        var rpi = config.raspberrypi;
         $http
-          .get('http://chow-chow' + $scope.params.id + '.local:1337/api/settings')
+          .get('http://' + rpi.basename + $scope.params.id + '.local:1337/api/settings')
           .success(function(data) {
             settings = data;
 
-            var rpi = config.raspberrypi;
             for (var i = 1; i <= rpi.population; i++) {
               var digit = (i.toString().length > 1) ? i.toString() : "0" + i;
               var url = 'http://' + rpi.basename + digit + '.local:' + rpi.port;

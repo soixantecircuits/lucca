@@ -28,7 +28,9 @@ app.controller('HomeCtrl', function ($scope, $rootScope, $location, ZhaoxiangSer
   function visuallyClassifiedElements(){
     var cameras = ZhaoxiangService.getAllStatus();
     for (var i = 0; i < cameras.connected.length; i++) {
-      document.getElementById('camera-' + cameras.connected[i].digit).parentElement.parentElement.classList.add('is-connected');
+      if (typeof cameras.connected[i] != 'undefined'){
+        document.getElementById('camera-' + cameras.connected[i].digit).parentElement.parentElement.classList.add('is-connected');
+      }
     }
     if(config.dev){
       for (var i = 0; i < cameras.notConnected.length; i++) {
