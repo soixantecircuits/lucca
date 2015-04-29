@@ -5,6 +5,7 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
   $templateCache.removeAll();
   $scope.params = $routeParams;
   $scope.ghostmode = JSON.parse(localStorage.getItem('isGhostMode')) || false ;
+  //$scope.ghostmode = false ;
   $scope.isStreaming = false;
   $scope.camera = ZhaoxiangService.getCameraObject($scope.params.id);
   $scope.stream = ZhaoxiangService.stream();
@@ -40,6 +41,14 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
     $scope.setTranslationX();
     $scope.setTranslationY();
   };
+  $scope.applyGhostCalibration = function() {
+    $scope.prevPhoto = JSON.parse(localStorage.getItem('cameraCalib'))[Number($scope.prev.digit)];
+    if ($scope.prevPhoto){
+      $('#camera-img-ctn > #ghost').css({
+        'webkitTransform': 'rotate(' + this.prevPhoto.rotation + 'deg) translateX(' + this.prevPhoto.translateX + 'px) translateY(' + this.prevPhoto.translateY + 'px)'
+      });
+    }
+  };
   $scope.toggleGhostmode = function() {
     localStorage.setItem('isGhostMode', $scope.ghostmode);
     if ($scope.stream) {
@@ -47,6 +56,8 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
         $scope.isStreaming = true;
         $scope.toggleStreaming();
       }
+      /*
+      // this seems wring, what does ghostmode has to do inside stream?
       if ($scope.ghostmode) {
         ZhaoxiangService.startStream($scope.prev.digit);
         $scope.imgPrev = new Image();
@@ -56,9 +67,10 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
         document.body.appendChild($scope.imgPrev);
         loop();
       } else {
+      */
         ZhaoxiangService.stopStream($scope.prev.digit);
         document.body.removeChild($scope.imgPrev);
-      }
+      //}
     } else {
       if (config.dev) {
         var prevID = ($scope.params.id - 1 < 10) ? '0' + Number($scope.params.id - 1).toString() : ($scope.params.id - 1);
@@ -67,15 +79,14 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
       // document.getElementById('ghost').src = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();
       } else {
         document.getElementById('ghost').src = $scope.prev.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
+        $scope.applyGhostCalibration(); 
+
       }
     }
   };
 
   if ($scope.currentCalib) {
     $scope.photo = $scope.currentCalib;
-  }
-  if ($scope.ghostmode) {
-    $scope.toggleGhostmode();
   }
 
   function init() {
@@ -100,6 +111,9 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
     } else {
       $scope.prev = ZhaoxiangService.getActiveCamera($scope.camera.index, '-1');
       $scope.next = ZhaoxiangService.getActiveCamera($scope.camera.index, '+1');
+    }
+    if ($scope.ghostmode) {
+      $scope.toggleGhostmode();
     }
 
     hotkeys.bindTo($scope)
@@ -237,7 +251,8 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
   $scope.sendAlignment = function() {
     var factorScale = $('#camera').get(0).naturalWidth/$('#camera').outerWidth();
     $http
-      .get(config.nuwa.address + ':' + config.nuwa.port + '/api/params/' + $scope.photo.number + '/' + $scope.photo.rotation + '/' + factorScale*$scope.photo.translateX + '/' + factorScale*$scope.photo.translateY)
+      //.get(config.nuwa.address + ':' + config.nuwa.port + '/api/params/' + $scope.photo.number + '/' + $scope.photo.rotation + '/' + factorScale*$scope.photo.translateX + '/' + factorScale*$scope.photo.translateY)
+      .get(config.nuwa.address + ':' + config.nuwa.port + '/api/params/' + $scope.photo.number + '/' + $scope.photo.rotation + '/' + $scope.photo.translateX + '/' + $scope.photo.translateY)
       .then(function(res) {
         console.log(res);
       })
