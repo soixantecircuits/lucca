@@ -154,7 +154,7 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
   if (config.dev) {
     $scope.img.src = $scope.camera.url;
   } else {
-    $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg';
+    $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
   }
 
   $scope.$on('$destroy', function() {
