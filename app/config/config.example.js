@@ -1,13 +1,17 @@
-var config: {
+var config = {
   raspberrypi: {
-    basename: "voldenuit",
+    basename: "chow-chow",
     port: 1337,
     population: 64
   },
   streaming: true,
-  dev: false,
+  dev: true,
+   fakeFile:{
+    format:'',
+    zero:'00'
+  },
   nuwa: {
     address: 'http://127.0.0.1',
-    port: '3000'
+    port: '3001'
   }
 }

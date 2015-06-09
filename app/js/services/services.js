@@ -1,5 +1,5 @@
 'use strict';
-
+// TODO: Use a config file for hostname
 angular
 .module('lucca')
 .factory('ZhaoxiangService', function ($http, $q, $timeout, $rootScope){
@@ -32,7 +32,8 @@ angular
       cameras[i].request = $http
         .get(cameras[i].url + '/api/status', {timeout: cameras[i].defer.promise})
         .success(function (data, status, headers, config){
-          var camId = config.url.match(/voldenuit(.*)\.local/)[1];
+          var re = new RegExp(rpi.basename + '\(.*\)\.local', 'g');
+          var camId = re.exec(config.url)[1];
           connectedCameras.push(cameras[Number(camId) - 1]);
 
           if(connectedCameras.length + notConnectedCameras.length === rpi.population){
@@ -42,7 +43,8 @@ angular
           }
         })
         .error(function (data, status, headers, config){
-          var camId = config.url.match(/voldenuit(.*)\.local/)[1];
+          var re = new RegExp(rpi.basename + '\(.*\)\.local', 'g');
+          var camId = re.exec(config.url)[1];
           // notConnectedCameras.push({
           //   digit: camId
           // })
@@ -85,7 +87,8 @@ angular
         connectedCameras[i].request
           .success(function (data, status, headers, config){
             if(data.match(/(api\/lastpicture)/)) {
-              var camId = config.url.match(/voldenuit(.*)\.local/)[1];
+              var re = new RegExp(rpi.basename + '\(.*\)\.local', 'g');
+              var camId = re.exec(config.url)[1];
               callback(data, camId);
             } else {
               console.log(data);
@@ -107,7 +110,8 @@ angular
       cameras[Number(index)].request
         .success(function (data, status, headers, config){
           if(data.match(/(api\/lastpicture)/)) {
-            var camId = config.url.match(/voldenuit(.*)\.local/)[1];
+            var re = new RegExp(rpi.basename + '\(.*\)\.local', 'g');
+            var camId = re.exec(config.url)[1];
             callback(data, camId);
           } else {
             console.log(data);
@@ -124,6 +128,9 @@ angular
     getNextCamera: function(index){
       var id = (Number(index) + 1 > rpi.population - 1) ? 0 : Number(index);
       return cameras[id];
+    },
+    getListOfActiveCameras : function(){
+      return cameras;
     },
     getActiveCamera: function(start, direction){
       if (direction === '+1' || direction === '-1'){
@@ -150,7 +157,7 @@ angular
         return 'Streaming not activated';
       }
       $http
-        .get('http://voldenuit' + id + '.local:1337/api/stream/start')
+        .get('http://' + rpi.basename + id + '.local:1337/api/stream/start')
         .then(function (){
         })
     },
@@ -159,7 +166,7 @@ angular
         return 'Streaming not activated';
       }
       $http
-        .get('http://voldenuit' + id + '.local:1337/api/stream/stop')
+        .get('http://' + rpi.basename + id + '.local:1337/api/stream/stop')
         .then(function (){
         })
     },

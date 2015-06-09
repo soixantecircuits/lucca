@@ -13,8 +13,10 @@ In `dev` mode, you'll need to have a `app/img/data` folder filled with images. Y
 ## Usage
 - In browser:
 ```bash
-$ grunt browser
+$ npm start
 ```
+use to be : `grunt browser`
+
 - In nw:
 ```bash
 $ grunt dist-xxxx
