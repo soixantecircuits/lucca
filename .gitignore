@@ -6,3 +6,4 @@ resources/**/*
 app/config/config.js
 bower_components/
 app/img/data/**
+calibration-data/

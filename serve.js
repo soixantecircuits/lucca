@@ -10,9 +10,9 @@ var finalhandler = require('finalhandler'),
 
 if (typeof localStorage === "undefined" || localStorage === null) {
   var LocalStorage = require('node-localstorage').LocalStorage;
-  localStorage = new LocalStorage('./scratch');
+  localStorage = new LocalStorage('./calibration-data');
 }
- 
+
 localStorage.setItem('cameraCalib', 'myFirstValue');
 console.log(localStorage.getItem('myFirstKey'));
 
@@ -29,6 +29,7 @@ app.use(function(req, res, next) {
 
 // Serve up public/ftp folder
 app.use(serveStatic(pathHelper.join(__dirname, 'app'), {'index': ['index.html', 'index.htm']}));
+app.use(express.static('bower_components'));
 
 app.use('/camcalib/:calibration', function (req, res, next) {
   console.log('Request Type:', req.method);
@@ -38,22 +39,14 @@ app.use('/camcalib/:calibration', function (req, res, next) {
       localStorage.setItem('camcalib', req.params.calibration);
     }
     res.status(200).end();
-    next();  
-  } 
+    next();
+  }
 });
 
 app.get('/camcalib/', function(req, res){
     res.status(200);
     res.json(localStorage.getItem('camcalib'));
 });
-
-
-
-// Create server
-/*var server = http.createServer(function(req, res) {
-  var done = finalhandler(req, res);
-  serve(req, res, done);
-});*/
 
 // Listen
 //server.listen(port);

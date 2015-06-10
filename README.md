@@ -7,8 +7,7 @@ $ npm i
 $ bower install
 ```
 
-In `dev` mode, you'll need to have a `app/img/data` folder filled with images. You wan download a serie of pictures in this [google drive folder](https://drive.google.com/drive/folders/0B83FWeLjxMvhWnY0THlVNnlXYmM/0B83FWeLjxMvhfktFSW5HdGtRMHh3bmxRSk9GMWJmMGtxUHdkUVlTbDlHSWlYREF3YllXc0U/0B83FWeLjxMvhflZmWXdSaXlVTVBSS2k3UEJ3cGU5UVZiRHJEZnhSS3hROVZiZERBbUtqdm8/0B83FWeLjxMvhfjJwUHNGb2hDZ1NGRE02YmpoQmhPNUJoemtHWUJaUWtVOE0zUHRsTnFNaEk/
-0B83FWeLjxMvhfmNGUjE4WmxfWWRhN0J5XzJtWVdsSlpNbFp3NDVBbjBqNE16RTlzcEhhdms).
+In `dev` mode, you'll need to have a `app/img/data` folder filled with images. You wan download a serie of pictures in this [google drive folder](https://drive.google.com/folderview?id=0B0XU5Cf3GpodfkY2VkZSSEtWV2FiNkR1b3pab09JVEVxRnVFekk5WV9PQy1QX2Jncm1qNDQ&usp=sharing).
 
 ## Usage
 - In browser:

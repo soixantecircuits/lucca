@@ -14,8 +14,8 @@
     "type": "git",
     "url": "git://github.com/soixantecircuits/lucca.git"
   },
-  "scripts":{
-    "start":"node serve.js"
+  "scripts": {
+    "start": "node serve.js"
   },
   "dependencies": {
     "express": "^4.12.3",
