@@ -16,23 +16,23 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
   if(JSON.parse(localStorage.getItem('cameraCalib')) && JSON.parse(localStorage.getItem('cameraCalib')).length > 0){
     $scope.currentCalib = JSON.parse(localStorage.getItem('cameraCalib'))[Number($scope.params.id)];
   } else {
-    $scope.currentCalib = null;  
+    $scope.currentCalib = null;
   }
   $scope.setRotation = function() {
     $('#camera-img-ctn > #camera').css({
-      'webkitTransform': 'rotate(' + this.photo.rotation + 'deg) translateX(' + this.photo.translateX + 'px) translateY(' + this.photo.translateY + 'px)'
+      'webkitTransform': 'rotate(' + $scope.photo.rotation + 'deg) translateX(' + $scope.photo.translateX + 'px) translateY(' + $scope.photo.translateY + 'px)'
     });
     $scope.saveCalibration();
   };
   $scope.setTranslationX = function() {
     $('#camera-img-ctn > #camera').css({
-      'webkitTransform': 'rotate(' + this.photo.rotation + 'deg) translateX(' + this.photo.translateX + 'px) translateY(' + this.photo.translateY + 'px)'
+      'webkitTransform': 'rotate(' + $scope.photo.rotation + 'deg) translateX(' + $scope.photo.translateX + 'px) translateY(' + $scope.photo.translateY + 'px)'
     });
     $scope.saveCalibration();
   };
   $scope.setTranslationY = function() {
     $('#camera-img-ctn > #camera').css({
-      'webkitTransform': 'rotate(' + this.photo.rotation + 'deg) translateX(' + this.photo.translateX + 'px) translateY(' + this.photo.translateY + 'px)'
+      'webkitTransform': 'rotate(' + $scope.photo.rotation + 'deg) translateX(' + $scope.photo.translateX + 'px) translateY(' + $scope.photo.translateY + 'px)'
     });
     $scope.saveCalibration();
   };
@@ -79,7 +79,7 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
       // document.getElementById('ghost').src = 'http://lorempixel.com/720/480' + '?q=' + new Date().getTime();
       } else {
         document.getElementById('ghost').src = $scope.prev.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
-        $scope.applyGhostCalibration(); 
+        $scope.applyGhostCalibration();
 
       }
     }
@@ -94,6 +94,9 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
       .get('/camcalib/')
       .then(function(res){
         var dataRes = JSON.parse(res.data);
+        if(typeof(dataRes) !== null){
+          return;
+        }
         if(dataRes.length > 0){
           $scope.photoCalibList = dataRes;
           $scope.currentCalib = $scope.photoCalibList[Number($scope.params.id)];
@@ -118,18 +121,92 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
 
     hotkeys.bindTo($scope)
       .add({
+        combo: 'ctrl+left',
+        callback: function() {
+          if (!$rootScope.isLoading && $scope.photo.rotation > -15) {
+            $scope.photo.rotation = Number($scope.photo.rotation) - 0.1;
+            $scope.setRotation();
+          }
+        }
+      })
+      .add({
+        combo: 'ctrl+right',
+        callback: function() {
+          if (!$rootScope.isLoading && $scope.photo.translateX < 15) {
+            $scope.photo.rotation = Number($scope.photo.rotation) + 0.1;
+            $scope.setRotation();
+          }
+        }
+      })
+      .add({
         combo: 'left',
         callback: function() {
-          if (!$rootScope.isLoading) {
-            window.location = '#/cam/' + $scope.prev.digit;
+          if (!$rootScope.isLoading && $scope.photo.translateX > -80) {
+            $scope.photo.translateX = Number($scope.photo.translateX) - .5;
+            $scope.setTranslationX();
+          }
+        }
+      })
+      .add({
+        combo: 'shift+left',
+        callback: function() {
+          if (!$rootScope.isLoading && $scope.photo.translateX > -80) {
+            $scope.photo.translateX = Number($scope.photo.translateX) - 5;
+            $scope.setTranslationX();
           }
         }
       })
       .add({
         combo: 'right',
         callback: function() {
-          if (!$rootScope.isLoading) {
-            window.location = '#/cam/' + $scope.next.digit;
+          if (!$rootScope.isLoading && $scope.photo.translateX < 80) {
+            $scope.photo.translateX = Number($scope.photo.translateX) + .5;
+            $scope.setTranslationX();
+          }
+        }
+      })
+      .add({
+        combo: 'shift+right',
+        callback: function() {
+          if (!$rootScope.isLoading && $scope.photo.translateX < 80) {
+            $scope.photo.translateX = Number($scope.photo.translateX) + 5;
+            $scope.setTranslationX();
+          }
+        }
+      })
+      .add({
+        combo: 'up',
+        callback: function() {
+          if (!$rootScope.isLoading && $scope.photo.translateY > -45) {
+            $scope.photo.translateY = Number($scope.photo.translateY) - .5;
+            $scope.setTranslationY();
+          }
+        }
+      })
+      .add({
+        combo: 'shift+up',
+        callback: function() {
+          if (!$rootScope.isLoading && $scope.photo.translateY > -45) {
+            $scope.photo.translateY = Number($scope.photo.translateY) - 5;
+            $scope.setTranslationY();
+          }
+        }
+      })
+      .add({
+        combo: 'down',
+        callback: function() {
+          if (!$rootScope.isLoading && $scope.photo.translateY < 45) {
+            $scope.photo.translateY = Number($scope.photo.translateY) + .5;
+            $scope.setTranslationY();
+          }
+        }
+      })
+      .add({
+        combo: 'shift+down',
+        callback: function() {
+          if (!$rootScope.isLoading && $scope.photo.translateY < 45) {
+            $scope.photo.translateY = Number($scope.photo.translateY) + 5;
+            $scope.setTranslationY();
           }
         }
       });
@@ -151,10 +228,13 @@ app.controller('CamCtrl', function($scope, $rootScope, $location, $routeParams, 
   }
 
   $scope.img = document.getElementById('camera');
+  $scope.imgFull = document.getElementById('camera-full');
   if (config.dev) {
     $scope.img.src = $scope.camera.url;
+    $scope.imgFull.src = $scope.camera.url;
   } else {
     $scope.img.src = $scope.camera.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
+    $scope.imgFull.src = $scope.camera.url + '/api/lastpicture/jpeg?q=' + new Date().getTime();
   }
 
   $scope.$on('$destroy', function() {

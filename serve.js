@@ -13,9 +13,6 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   localStorage = new LocalStorage('./calibration-data');
 }
 
-localStorage.setItem('cameraCalib', 'myFirstValue');
-console.log(localStorage.getItem('myFirstKey'));
-
 var app = express();
 
 port = argv.port || port;
